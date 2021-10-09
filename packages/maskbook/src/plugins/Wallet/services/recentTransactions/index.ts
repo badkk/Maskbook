@@ -1,17 +1,10 @@
 import type { TransactionReceipt } from 'web3-core'
 import type { JsonRpcPayload } from 'web3-core-helpers'
-import { TransactionStatusType } from '@masknet/web3-shared'
+import type { TransactionStatusType } from '@masknet/web3-shared'
 import { getSendTransactionComputedPayload } from '../../../../extension/background-script/EthereumService'
 import * as database from './database'
 import * as watcher from './watcher'
-
-function getReceiptStatus(receipt: TransactionReceipt | null) {
-    if (!receipt) return TransactionStatusType.NOT_DEPEND
-    const status = receipt.status as unknown as string
-    if (receipt.status === false || ['0x', '0x0'].includes(status)) return TransactionStatusType.FAILED
-    if (receipt.status === true || ['0x1'].includes(status)) return TransactionStatusType.SUCCEED
-    return TransactionStatusType.NOT_DEPEND
-}
+import * as helpers from './helpers'
 
 export interface RecentTransaction {
     at: Date
@@ -38,6 +31,11 @@ export async function clearRecentTransactions(address: string) {
     await database.clearRecentTransactions(address)
 }
 
+export async function getRecentTransaction(address: string, hash: string) {
+    const list = await getRecentTransactionList(address)
+    return list.find((x) => x.hash === hash)
+}
+
 export async function getRecentTransactionList(address: string): Promise<RecentTransaction[]> {
     const transactions = await database.getRecentTransactions(address)
     const allSettled = await Promise.allSettled(
@@ -47,7 +45,7 @@ export async function getRecentTransactionList(address: string): Promise<RecentT
             return {
                 at,
                 hash,
-                status: getReceiptStatus(receipt),
+                status: helpers.getReceiptStatus(receipt),
                 receipt,
                 payload,
                 computedPayload: await getSendTransactionComputedPayload(payload),
