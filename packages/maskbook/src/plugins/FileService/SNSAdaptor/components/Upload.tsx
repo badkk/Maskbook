@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { useAsync } from 'react-use'
 import { useI18N } from '../../../../utils'
 import { makeFileKey } from '../../file-key'
-import { FileRouter, MAX_FILE_SIZE } from '../../constants'
+import { FileRouter, MAX_FILE_SIZE, MAX_IPFS_FILE_SIZE } from '../../constants'
 import { PluginFileServiceRPC } from '../../Worker/rpc'
 import { RecentFiles } from './RecentFiles'
 import { UploadDropArea } from './UploadDropArea'
@@ -59,6 +59,7 @@ export const Upload: React.FC = () => {
     const history = useHistory()
     const [encrypted, setEncrypted] = useState(true)
     const [useCDN, setUseCDN] = useState(false)
+    const [useIPFS, setUseIPFS] = useState(false)
     const recent = useAsync(() => PluginFileServiceRPC.getRecentFiles(), [])
     const onFile = async (file: File) => {
         let key: string | undefined = undefined
@@ -74,9 +75,11 @@ export const Upload: React.FC = () => {
                 name: file.name,
                 size: file.size,
                 type: file.type,
+                file,
                 block,
                 checksum,
                 useCDN,
+                useIPFS,
             })
         } else {
             history.replace(FileRouter.uploaded, item)
@@ -85,7 +88,7 @@ export const Upload: React.FC = () => {
     return (
         <section className={classes.container}>
             <section className={classes.upload}>
-                <UploadDropArea maxFileSize={MAX_FILE_SIZE} onFile={onFile} />
+                <UploadDropArea maxFileSize={useIPFS ? MAX_IPFS_FILE_SIZE : MAX_FILE_SIZE} onFile={onFile} />
                 <RecentFiles files={recent.value ?? []} />
             </section>
             <section className={classes.checkItems}>
@@ -110,6 +113,17 @@ export const Upload: React.FC = () => {
                     }
                     className={classes.usedCDN}
                     label={t('plugin_file_service_use_cdn')}
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            color="secondary"
+                            checked={useIPFS}
+                            onChange={(event) => setUseIPFS(event.target.checked)}
+                        />
+                    }
+                    className={classes.usedCDN}
+                    label={t('plugin_file_service_use_ipfs')}
                 />
             </section>
             <section className={classes.legal}>

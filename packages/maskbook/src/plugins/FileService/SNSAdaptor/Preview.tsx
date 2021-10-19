@@ -56,7 +56,10 @@ export function Preview({ info }: { info: FileInfo }) {
             {t('plugin_file_service_unencrypted')}
         </Typography>
     )
-    const link = `https://arweave.net/${info.landingTxID}`
+    const link =
+        info.provider === 'crust'
+            ? `https://crustipfs.xyz/ipfs/${info.landingTxID}`
+            : `https://arweave.net/${info.landingTxID}`
     const onClick = (event: React.MouseEvent) => {
         event.preventDefault()
         event.stopPropagation()

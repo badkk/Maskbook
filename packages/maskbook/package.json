@@ -130,7 +130,8 @@
     "webcrypto-liner": "1.2.4",
     "webextension-polyfill": "^0.8.0",
     "z-schema": "^5.0.1",
-    "zod": "3.8.2"
+    "zod": "3.8.2",
+    "axios": "^0.23.0"
   },
   "devDependencies": {
     "@dimensiondev/webextension-shim": "0.0.3-20210823035705-4257e12",

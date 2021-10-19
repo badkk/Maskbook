@@ -328,6 +328,7 @@ importers:
       arweave: ^1.10.13
       assert: ^2.0.0
       async-call-rpc: ^6.0.0
+      axios: ^0.23.0
       bignumber.js: ^9.0.1
       bip39: ^3.0.2
       buffer: ^6.0.3
@@ -467,6 +468,7 @@ importers:
       arweave: 1.10.16
       assert: 2.0.0
       async-call-rpc: 6.0.0
+      axios: 0.23.0
       bignumber.js: 9.0.1
       bip39: 3.0.4
       buffer: 6.0.3
@@ -9871,6 +9873,14 @@ packages:
 
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
+    dependencies:
+      follow-redirects: 1.14.4
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios/0.23.0:
+    resolution: {integrity: sha512-NmvAE4i0YAv5cKq8zlDoPd1VLKAqX5oLuZKs8xkJa4qi6RGn0uhCYFjWtHHC9EM/MwOwYWOs53W+V0aqEXq1sg==}
     dependencies:
       follow-redirects: 1.14.4
     transitivePeerDependencies:
@@ -20694,6 +20704,7 @@ packages:
 
   /reflect-metadata/0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
+    requiresBuild: true
     dev: false
     optional: true
 

@@ -11,7 +11,10 @@ import { PersonaContext } from '../../hooks/usePersonaContext'
 const MSG_DELIMITER = '2c1aca02'
 
 const parseFileServiceMessage = (body: any) => {
-    const link = `https://arweave.net/${body.landingTxID}/#${body.key}`
+    const link =
+        body.provider === 'crust'
+            ? `https://crustipfs.xyz/ipfs/${body.landingTxID}`
+            : `https://arweave.net/${body.landingTxID}/#${body.key}`
     return (
         <Link underline="none" target="_blank" rel="noopener noreferrer" href={link}>
             {body.name}

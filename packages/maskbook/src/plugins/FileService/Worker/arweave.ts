@@ -48,6 +48,7 @@ export interface LandingPageMetadata {
     type: string
     txId: string
     useCDN: boolean
+    useIPFS: boolean
 }
 
 export async function uploadLandingPage(metadata: LandingPageMetadata) {

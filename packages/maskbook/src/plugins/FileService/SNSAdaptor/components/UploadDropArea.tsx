@@ -95,6 +95,7 @@ export const UploadDropArea: React.FC<Props> = ({ maxFileSize, onFile }) => {
     const MAX_FILE_SIZE = formatFileSize(maxFileSize)
     const onInput = (event: React.FormEvent<HTMLInputElement>) => {
         const file = event.currentTarget.files?.item(0)
+
         if (isNil(file)) {
             onError(101)
         } else if (file.size > maxFileSize) {

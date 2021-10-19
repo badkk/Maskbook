@@ -65,7 +65,12 @@ export const Uploaded: React.FC = () => {
         if (!event.shiftKey) {
             return
         }
-        const link = `https://arweave.net/${state.landingTxID}`
+        console.log(state)
+        const link =
+            state.provider === 'arweave'
+                ? `https://arweave.net/${state.landingTxID}`
+                : `https://crustipfs.xyz/ipfs/${state.landingTxID}`
+
         open(state.key ? `${link}#${state.key}` : link)
     }
     return (
